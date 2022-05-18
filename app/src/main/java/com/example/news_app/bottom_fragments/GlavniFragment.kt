@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.news_app.R
+import com.example.news_app.adapters.MainAdapter
 import com.example.news_app.databinding.FragmentGlavniBinding
 import com.example.news_app.databinding.FragmentHomeBinding
 import com.example.news_app.utils.Status
@@ -42,6 +43,7 @@ class GlavniFragment : Fragment() {
 
     lateinit var binding: FragmentGlavniBinding
     lateinit var userViewModel: UserViewModel
+    lateinit var mainAdapter: MainAdapter
     private val TAG = "GlavniFragment"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,8 +56,77 @@ class GlavniFragment : Fragment() {
 
 
 
-        GlobalScope.launch(Dispatchers.Main) {
-            userViewModel.getWord("fuck")
+//        GlobalScope.launch(Dispatchers.Main) {
+//            userViewModel.getWord("fuck")
+//                .observe(viewLifecycleOwner) {
+//
+//
+//
+//
+//
+//
+//                    when (it.status) {
+//                        Status.LOADING -> {
+//
+//                        }
+//
+//                        Status.ERROR -> {
+//
+//                            Log.d(TAG, "onCreateView: ${it.message}")
+//                            Toast.makeText(
+//                                binding.root.context,
+//                                "Word not found",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
+//
+//                        Status.SUCCESS -> {
+//
+//                            try {
+//
+//
+//                                Log.d(TAG, "onCreateView: ${it.data!!.data}")
+//
+//
+//                            }catch (e:java.lang.Exception){
+//                                Toast.makeText(
+//                                    binding.root.context,
+//                                    "Word not found",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//
+//
+//
+//
+//
+//
+//                        }
+//                    }
+//
+//
+//
+//                }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (param1 == 0){
+                    GlobalScope.launch(Dispatchers.Main) {
+            userViewModel.getWord("technology")
                 .observe(viewLifecycleOwner) {
 
 
@@ -84,6 +155,8 @@ class GlavniFragment : Fragment() {
 
 
                                 Log.d(TAG, "onCreateView: ${it.data!!.data}")
+                                mainAdapter = MainAdapter(it.data.data)
+                                binding.rvKurs.adapter = mainAdapter
 
 
                             }catch (e:java.lang.Exception){
@@ -105,20 +178,123 @@ class GlavniFragment : Fragment() {
 
 
                 }}
-
-
-
-
-
-
-
-
-
-
-
-        if (param1 == 0){
-            binding.proba.text = "Healthy"
         }
+
+
+        if (param1 == 1){
+            GlobalScope.launch(Dispatchers.Main) {
+                userViewModel.getWord("entertainment")
+                    .observe(viewLifecycleOwner) {
+
+
+
+
+
+
+                        when (it.status) {
+                            Status.LOADING -> {
+
+                            }
+
+                            Status.ERROR -> {
+
+                                Log.d(TAG, "onCreateView: ${it.message}")
+                                Toast.makeText(
+                                    binding.root.context,
+                                    "Word not found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                            Status.SUCCESS -> {
+
+                                try {
+
+
+                                    Log.d(TAG, "onCreateView: ${it.data!!.data}")
+                                    mainAdapter = MainAdapter(it.data.data)
+                                    binding.rvKurs.adapter = mainAdapter
+
+
+                                }catch (e:java.lang.Exception){
+                                    Toast.makeText(
+                                        binding.root.context,
+                                        "Word not found",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+
+
+
+
+
+                            }
+                        }
+
+
+
+                    }}
+        }
+
+
+        if (param1 == 2){
+            GlobalScope.launch(Dispatchers.Main) {
+                userViewModel.getWord("health")
+                    .observe(viewLifecycleOwner) {
+
+
+
+
+
+
+                        when (it.status) {
+                            Status.LOADING -> {
+
+                            }
+
+                            Status.ERROR -> {
+
+                                Log.d(TAG, "onCreateView: ${it.message}")
+                                Toast.makeText(
+                                    binding.root.context,
+                                    "Word not found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                            Status.SUCCESS -> {
+
+                                try {
+
+
+                                    Log.d(TAG, "onCreateView: ${it.data!!.data}")
+                                    mainAdapter = MainAdapter(it.data.data)
+                                    binding.rvKurs.adapter = mainAdapter
+
+
+                                }catch (e:java.lang.Exception){
+                                    Toast.makeText(
+                                        binding.root.context,
+                                        "Word not found",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+
+
+
+
+
+                            }
+                        }
+
+
+
+                    }}
+        }
+        
+        
 
 
         return binding.root

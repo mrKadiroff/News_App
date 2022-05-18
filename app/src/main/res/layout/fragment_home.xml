@@ -65,13 +65,71 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bullshit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/qidiruv_constraing">
+
+        <TextView
+            android:id="@+id/lates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:textColor="@color/black"
+            android:text="Latest News"
+            android:layout_margin="15sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See All"
+            app:layout_constraintBottom_toBottomOf="@id/lates"
+            app:layout_constraintEnd_toStartOf="@id/forward"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12sp"
+            android:textColor="#0080FF"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/forward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_arrow_forward_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/lates"
+            android:layout_marginTop="8dp"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemsRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8sp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bullshit"
+        app:layout_constraintVertical_bias="0.01999998"
+        tools:listitem="@layout/item_card" />
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutgalvni"
         android:layout_width="match_parent"
         android:layout_marginTop="12sp"
         android:layout_height="?actionBarSize"
-        app:layout_constraintTop_toBottomOf="@id/qidiruv_constraing"
+        app:layout_constraintTop_toBottomOf="@id/itemsRv"
         app:tabMode="scrollable"
         app:tabIndicatorHeight="0dp"
         android:layout_marginBottom="22dp"

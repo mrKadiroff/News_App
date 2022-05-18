@@ -2,16 +2,26 @@ package com.example.news_app.bottom_fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.news_app.R
+import com.example.news_app.adapters.HorizontalAdapter
+import com.example.news_app.adapters.MainAdapter
 import com.example.news_app.adapters.ViewPagerAdapter
 import com.example.news_app.databinding.FragmentHomeBinding
 import com.example.news_app.databinding.ItemTabBinding
+import com.example.news_app.utils.Status
+import com.example.news_app.viewmodels.UserViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,10 +46,13 @@ class HomeFragment : Fragment() {
         }
     }
     lateinit var binding: FragmentHomeBinding
+    lateinit var horizontalAdapter: HorizontalAdapter
+    private val TAG = "HomeFragment"
+    lateinit var userViewModel: UserViewModel
     val tabArray = arrayOf(
-        "Healthy",
         "Technology",
-        "Finance",
+        "Entertainment",
+        "Health",
         "Arts",
         "Sport"
     )
@@ -49,12 +62,70 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         setSearch()
         setViewPager()
+        setRv()
 
 
         return binding.root
+    }
+
+    private fun setRv() {
+        GlobalScope.launch(Dispatchers.Main) {
+            userViewModel.getWord("general")
+                .observe(viewLifecycleOwner) {
+
+
+
+
+
+
+                    when (it.status) {
+                        Status.LOADING -> {
+
+                        }
+
+                        Status.ERROR -> {
+
+                            Log.d(TAG, "onCreateView: ${it.message}")
+                            Toast.makeText(
+                                binding.root.context,
+                                "Word not found",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        Status.SUCCESS -> {
+
+                            try {
+
+
+                                Log.d(TAG, "onCreateView: ${it.data!!.data}")
+                               horizontalAdapter = HorizontalAdapter(it.data.data)
+                                binding.itemsRv.adapter = horizontalAdapter
+
+
+                            }catch (e:java.lang.Exception){
+                                Toast.makeText(
+                                    binding.root.context,
+                                    "Word not found",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+
+
+
+
+
+                        }
+                    }
+
+
+
+                }}
     }
 
     private fun setViewPager() {

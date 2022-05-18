@@ -13,4 +13,11 @@ interface RetrofitService {
                         @Query("sort") sort: String
     ): NewsData
 
+
+    @GET("news")
+    suspend fun getSearchData(@Query("access_key") access_key:String,
+                        @Query("languages") languages:String,
+                        @Query("keywords") keywords:String
+    ): NewsData
+
 }
